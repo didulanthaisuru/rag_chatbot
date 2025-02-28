@@ -1,24 +1,26 @@
 from langchain.tools import Tool
 
-todo_list = []
+# In-memory storage for tasks
+tasks = []
 
-def add_task(task):
-    todo_list.append(task)
-    return f"Task '{task}' added to your to-do list."
+# Function to add a task
+def add_task(task: str) -> str:
+    tasks.append(task)
+    return f"Task '{task}' added successfully."
 
-def get_tasks(_):
-    if not todo_list:
-        return "Your to-do list is empty."
-    return "\n".join([f" - {task}" for task in todo_list])
+# Function to get tasks
+def get_tasks() -> str:
+    return "\n".join(tasks) if tasks else "No tasks found."
 
+# Define tools
 add_task_tool = Tool(
-    name="GetToDo",
-    fanc=add_task,
+    name="AddTask",
+    func=add_task,
     description="Adds a task to the to-do list."
 )
 
-get_tasks_tool=Tool(
-    name="GetToDo",
+get_tasks_tool = Tool(
+    name="GetTasks",
     func=get_tasks,
-    description="Gets all tasks from the to-do list."
+    description="Retrieves the list of to-do tasks."
 )

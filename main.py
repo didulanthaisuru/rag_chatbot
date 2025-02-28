@@ -1,9 +1,15 @@
-from langchain_google_genai import GoogleGenerativeAI
-from config import GEMINI_API_KEY
+from agent import agent
 
-# Initialize Gemini Flash model
-llm = GoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=GEMINI_API_KEY)
+def main():
+    print("Welcome to the AI Financial Assistant!")
+    
+    while True:
+        user_input = input("\nEnter your query (or type 'exit' to quit): ")
+        if user_input.lower() == "exit":
+            print("Goodbye!")
+            break
+        response = agent.invoke({"input": user_input})
+        print("\nAssistant:", response)
 
-# Test prompt
-response = llm.invoke("What is LangChain?")
-print(response)
+if __name__ == "__main__":
+    main()
